@@ -1,0 +1,86 @@
+/* Home */
+
+.ir1 {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.ih1 {
+    font-weight: bolder;
+    font-size: 35px;
+}
+
+.ibuton {
+    border: 1px solid rgb(212, 212, 212);
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.3s;
+}
+
+.ibuton:hover {
+    border-color: rgb(80, 80, 80);
+}
+
+.ibehind {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.ir2 {
+    margin-top: 100px;
+}
+
+.ih6 {
+    font-weight: bolder;
+}
+
+.ih4 {
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.iiocklink {
+    color: black;
+    margin-top: 20px;
+}
+
+.iiocklink:hover {
+    color: rgb(91, 90, 90);
+}
+
+.iockimage {
+    max-width: 300px;
+}
+
+@media screen and (max-width: 1000px) {
+    .iock {
+        text-align: center;
+    }
+
+    .iockimage {
+        max-width: 250px;
+    }
+}
+
+.ir3 {
+    margin-top: 80px;
+}
+
+.inp {
+    font-size: 15px;
+}
+
+.inpk {
+    font-size: 13px;
+}
+
+.ibtncb {
+    margin-top: 30px;
+    text-align: center;
+}

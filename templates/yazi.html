@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title> Yazı - threecybersecurity </title>
+<style>
+    /* Add share button styles */
+    .share-button {
+        position: fixed;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        border: none;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+        color: #6c757d;
+        font-size: 22px;
+        transition: 0.5s;
+    }
+</style>
+{% endblock head %}
+
+{% block body %}
+<br><br><br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        {{ data['blogContent'] | safe }}
+
+                        <style>
+                            img {
+                                max-width: 700px;
+                            }
+
+                            @media screen and (max-width: 1000px) {
+                                img {
+                                    max-width: 250px;
+                                }
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <br><br>
+            <div>
+                <img src="..{{profileImage}}" alt="" height="70" width="70" style="border-radius: 50%;">
+                <a href="/@{{data.writer}}" style="text-decoration: none;"><span style="margin-left: 20px;"
+                        class="text-muted"> {{data['writer']}}
+                    </span></a>
+            </div>
+
+            <br><br>
+
+            <style>
+                .custom-container {
+                    display: flex;
+                    align-items: center;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                }
+
+                .custom-img {
+                    margin-right: 20px;
+                }
+
+                .custom-text-content {
+                    flex: 1;
+                    text-align: left;
+                }
+
+                .custom-text-content .custom-date {
+                    color: #6c757d;
+                }
+
+                .custom-text-content a {
+                    color: white;
+                    text-decoration: none;
+                    transition: 1s;
+                }
+
+                .custom-text-content a:hover {
+                    text-decoration: none;
+                    color: #54F4FC;
+                }
+
+                .aa:hover {
+                    color: #54F4FC;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+
+
+
+<i class="fa-solid fa-share-nodes share-button" onclick="shareContent()"></i>
+
+<script>
+    function shareContent() {
+        // Custom share logic or use the Web Share API if supported
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                url: window.location.href
+            }).then(() => {
+                console.log('Successful share');
+            }).catch((error) => {
+                console.log('Error sharing:', error);
+            });
+        } else {
+            // Fallback for browsers that do not support the Web Share API
+            alert('Paylaşma özelliği tarayıcınız tarafından desteklenmiyor.');
+        }
+    }
+</script>
+
+<br><br><br><br>
+{% endblock body %}

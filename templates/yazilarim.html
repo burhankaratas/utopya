@@ -1,0 +1,99 @@
+{% extends 'applayout.html' %}
+
+{% block head %}
+<title> Yazı Oluştur - Ütopya </title>
+{% endblock head %}
+
+{% block body %}
+
+<!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/zwypt5zxx7zv1daxbl4mep1fju07cwyaj3ffoh4j26yeua8w/tinymce/7/tinymce.min.js"
+    referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+    });
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <br><br>
+            <h1> Yazılarınız </h1>
+            <br><br>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm">
+                                Ad
+                            </div>
+                            <div class="col-sm">
+                                İçerik
+                            </div>
+                            <div class="col-sm">
+                                Yayımda mı?
+                            </div>
+                            <div class="col-sm">
+                                Görüntüleme
+                            </div>
+                            <div class="col-sm">
+                                Düzenle / Sil
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                {% for data in datas %}
+                <li class="list-group-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm">
+                                {{data['title']}}
+                            </div>
+                            <div class="col-sm">
+                                {{data['content']}}
+                            </div>
+                            <div class="col-sm">
+                                {% if data['IsPublish'] == 0 %}
+                                Hayır
+                                {% else %}
+                                Evet
+                                {% endif %}
+                            </div>
+                            <div class="col-sm">
+                                {{data['watch']}}
+                            </div>
+                            <div class="col-sm">
+                                <a href="gonderi-guncelle/8"
+                                    style="text-decoration: none; color: rgb(1, 9, 255); font-size: 20px; margin-left: 20px;"><i
+                                        class="fa-solid fa-pen"></i></a>
+                                <a href="delete/8"
+                                    style="text-decoration: none; color: red; font-size: 20px; margin-left: 20px"><i
+                                        class="fa-solid fa-trash-can"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+<title> Profil Düzenle - Ütopya Dergisi </title>
+{% endblock head %}
+
+{% block body %}
+<div class="container">
+    <div class="row epr1">
+        <div class="col-sm"></div>
+        <div class="col-sm-6">
+            <h1 class="lh1">Profilinizi Düzenleyelim</h1>
+            <span class="text-muted">İyi bir profil iyi bir başlangıçtır. Herkese açık ütopya profilinizi
+                düzenleyelim!</a></span>
+
+            <br><br>
+
+            <form method="post" enctype="multipart/form-data">
+                <label for="profileContent">Kendinizi Tek Bir Paragrafta Tanıtın</label>
+                <br>
+                <textarea type="text" class="input" name="profileContent" required></textarea>
+                <br><br>
+                <label for="profileImage">Yazılarınız ve Profilinizde Gözükecek Resminizi Yükleyin</label>
+                <br>
+                <input type="file" class="input" name="profileImage" required>
+                <br><br>
+                <input type="submit" value="Profilimi Tamamla!" class="buton">
+            </form>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</div>
+
+
+<style>
+    .epr1 {
+        margin-top: 100px;
+    }
+</style>
+
+<br><br><br><br>
+{% endblock body %}

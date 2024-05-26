@@ -1,0 +1,126 @@
+{% extends 'playout.html' %}
+
+{% block head %}
+<title> Ütopya - {{data["userName"]}} Profili </title>
+{% endblock head %}
+
+{% block body %}
+
+
+<br><br><br><br><br>
+<span class="profilename">
+    {{data["userName"]}}
+</span>
+<span class="profilephoto">
+    {% if profilephoto == "" %}
+    <img src="../static/images/anonim.png" alt="Profile Photo" height="60"
+        style="border-radius: 50%; border: 1px solid white; float: right">
+    {% endif %}
+
+    {% if profilephoto != "" %}
+    <img src="..{{data['profileImage']}}" alt="Profile Photo" height="60" width="60"
+        style="border-radius: 50%; border: 1px solid white; float: right">
+    {% endif %}
+
+</span>
+<span class="profileusername">
+    @{{data["userName"]}}
+</span>
+<div class="profileexplanation">
+    {% if data["profileContent"] == None %}
+
+    {% else %}
+    {{data["profileContent"]}}
+    {% endif %}
+</div>
+<div class="bottomprofile">
+    {% if "logged_in" in session and session["userName"] == userName %}
+    <br>
+    <a href="/author"> <button class="editprofilebutton"> Profilinizi Düzenleyin </button> </a>
+    {% endif %}
+
+    <style>
+        .editprofilebutton {
+            border: none;
+            padding-left: 60px;
+            padding-right: 60px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        .takipbirakbutton {
+            color: white;
+            background-color: #101010;
+            border: none;
+            border: 1px solid rgb(82, 82, 82);
+            padding-left: 60px;
+            padding-right: 60px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        .takipetbutton {
+            border: none;
+            padding-left: 60px;
+            padding-right: 60px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 10px;
+        }
+    </style>
+</div>
+<div style="text-align: center;">
+    <hr style="background-color: #232424;">
+</div>
+<br><br>
+
+<div class="container">
+    {% for gonderi in gonderidatas %}
+    <a href="/p/{{gonderi.url}}" style="color: black; text-decoration: none">
+        <div class="iyks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm">
+                        <br>
+                        <h6 class="ih6"> {{gonderi.title}} </h6>
+                        <span class="inp"> {{gonderi.content}} </span>
+                        <br>
+                        <span class="text-muted inpk"> {{gonderi.createdDate}} / {{userName}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <hr>
+    {% endfor %}
+</div>
+
+
+<style>
+    .profilename {
+        font-size: 23px;
+        font-weight: 900;
+    }
+
+    .profileusername {
+        display: block;
+    }
+
+    .profileexplanation {
+        margin-top: 25px;
+    }
+
+    .profilebottomlinkpy {
+        color: black;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .profilebottomlinkpy:hover {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+{% endblock body %}

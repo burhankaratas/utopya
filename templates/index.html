@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block head %}
+<link rel="stylesheet" href="../static/css/home.css">
+
 <title> Ütopya Dergisi - Ütopyanızı Dünyamıza Taşıyın </title>
 {% endblock head %}
 
@@ -26,39 +28,23 @@
             <br>
             <div class="container-fluid">
                 <div class="row">
+                    {% for data in datas %}
+                    {% if data['IsPinned'] == 1 %}
                     <div class="col-sm">
                         <br>
                         <div class="iock">
-                            <a href="#" class="iiocklink">
-                                <img src="https://kerteriz.net/content/images/size/w1140/2023/08/kubernetes-dersleri.jpg"
-                                    alt="resim" class="iockimage">
+                            <a href="/p/{{data.url}}" class="iiocklink">
+                                <img src="data:image/jpeg;base64,{{ data['articleLogo'] }}" alt="resim"
+                                    class="iockimage" height="200" width="200">
                                 <br><br>
-                                <h4 class="ih4">Temelden İleriye Türkçe Kubernetes Dersleri</h4>
+                                <h4 class="ih4">{{data['title']}}</h4>
                             </a>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <br>
-                        <div class="iock">
-                            <a href="#" class="iiocklink">
-                                <img src="https://kerteriz.net/content/images/size/w1140/2023/08/kubernetes-dersleri.jpg"
-                                    alt="resim" class="iockimage">
-                                <br><br>
-                                <h4 class="ih4">Temelden İleriye Türkçe Kubernetes Dersleri</h4>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <br>
-                        <div class="iock">
-                            <a href="#" class="iiocklink">
-                                <img src="https://kerteriz.net/content/images/size/w1140/2023/08/kubernetes-dersleri.jpg"
-                                    alt="resim" class="iockimage">
-                                <br><br>
-                                <h4 class="ih4">Temelden İleriye Türkçe Kubernetes Dersleri</h4>
-                            </a>
-                        </div>
-                    </div>
+                    {% else %}
+
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -68,73 +54,32 @@
         <div class="col-sm-8">
             <h6 class="ih6">SON YAZILAR</h6>
             <hr>
+            {% for data in datas %}
             <br>
-            <div class="iyks">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <br>
-                            <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDE4fHxhbmFseXRpY3xlbnwwfHx8fDE3MTQ0ODExNjd8MA&ixlib=rb-4.0.3&q=80&w=1140"
-                                alt="resim" height="100">
-                        </div>
-                        <div class="col-sm-9">
-                            <br>
-                            <h6 class="ih6">Kubernetes Tuning 2: CPU Limitlerini Kaldırarak Throttling Önlemek</h6>
-                            <span class="inp">Kubernetes resource limitleri, podların aşırı kaynak kullanımını engeller.
-                                Peki bu
-                                zararlı olabilir mi?</span>
-                            <br>
-                            <span class="text-muted inpk">30 - Nisan - 2024 / burhankaratas </span>
+            <a href="/p/{{data.url}}" style="color: black; text-decoration: none">
+                <div class="iyks">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <br>
+                                <img src="data:image/jpeg;base64,{{ data['articleLogo'] }}" alt="resim" height="100"
+                                    width="150">
+                            </div>
+                            <div class="col-sm-9">
+                                <br>
+                                <h6 class="ih6">{{data.title}}</h6>
+                                <span class="inp"> {{data.content}} </span>
+                                <br>
+                                <span class="text-muted inpk"> {{data.createdDate}} / {{data.writer}} </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="iyks">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <br>
-                            <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDE4fHxhbmFseXRpY3xlbnwwfHx8fDE3MTQ0ODExNjd8MA&ixlib=rb-4.0.3&q=80&w=1140"
-                                alt="resim" height="100">
-                        </div>
-                        <div class="col-sm-9">
-                            <br>
-                            <h6 class="ih6">Kubernetes Tuning 2: CPU Limitlerini Kaldırarak Throttling Önlemek</h6>
-                            <span class="inp">Kubernetes resource limitleri, podların aşırı kaynak kullanımını engeller.
-                                Peki bu
-                                zararlı olabilir mi?</span>
-                            <br>
-                            <span class="text-muted inpk">30 - Nisan - 2024 / burhankaratas </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="iyks">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <br>
-                            <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDE4fHxhbmFseXRpY3xlbnwwfHx8fDE3MTQ0ODExNjd8MA&ixlib=rb-4.0.3&q=80&w=1140"
-                                alt="resim" height="100">
-                        </div>
-                        <div class="col-sm-9">
-                            <br>
-                            <h6 class="ih6">Kubernetes Tuning 2: CPU Limitlerini Kaldırarak Throttling Önlemek</h6>
-                            <span class="inp">Kubernetes resource limitleri, podların aşırı kaynak kullanımını engeller.
-                                Peki bu
-                                zararlı olabilir mi?</span>
-                            <br>
-                            <span class="text-muted inpk">30 - Nisan - 2024 / burhankaratas </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="ibtncb">
+            </a>
+            {% endfor %}
+            <!-- <div class="ibtncb">
                 <button class="ibuton">Daha Fazla Yükle</button>
-            </div>
+            </div> -->
         </div>
         <div class="col-sm"></div>
     </div>

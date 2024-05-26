@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+<link rel="stylesheet" href="../static/css/login.css">
+
+<title> Giriş - Ütopya Dergisi </title>
+{% endblock head %}
+
+{% block body %}
+<div class="container">
+    <div class="row lr1">
+        <div class="col-sm">
+            <h1 class="lh1">Giriş Yapın</h1>
+            <span class="text-muted"> Yetkili değilseniz yanlış yerde olabilirsiniz. Lütfen <a href="/">Ana Sayfaya
+                    dönün</a></span>
+
+            <br><br>
+
+            <form method="post">
+                <label for="username">Kullanıcı Adı</label>
+                <br>
+                <input type="text" class="linput" name="username">
+                <br><br>
+                <label for="password">Şifreniz</label>
+                <br>
+                <input type="password" class="linput" name="password">
+                <br><br>
+                <input type="submit" value="Giriş Yap" class="lbuton">
+            </form>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br>
+{% endblock body %}
