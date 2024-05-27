@@ -17,7 +17,7 @@ def create_app():
     app.config["MYSQL_DB"] = os.getenv("MYSQL_DB")
     app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
-    app.secret_key = "36i%&^$753cj_pu5u^m6=*j__m&-)uz%84z@tzdr0$xz6*se"
+    app.secret_key = os.getenv("SECRET_KEY")
 
     return app
 

@@ -261,6 +261,33 @@ def yazi(url):
     else:
         flash("Böyle bir makale bulunamadı. Lütfen tekrar deneyin", "warning")
         return redirect(url_for("index"))   
+    
+
+@app.route("/yazarlar")
+def yazarlar():
+    cursor = mysql.connection.cursor()
+
+    query = "SELECT * FROM users"
+    result = cursor.execute(query)
+    
+    if result > 0:
+        datas = cursor.fetchall()
+
+        return render_template("yazarlar.html", datas = datas)
+    
+    else:
+        datas = None
+
+        return render_template("yazarlar.html", datas = datas)
+
+
+@app.route("/hakkimizda")
+def hakkimizda():
+    return render_template("hakkimizda.html")
+
+@app.route("/iletisim")
+def iletisim():
+    return render_template("iletisim.html")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 50))
