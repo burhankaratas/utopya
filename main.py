@@ -262,6 +262,58 @@ def yazi(url):
         flash("Böyle bir makale bulunamadı. Lütfen tekrar deneyin", "warning")
         return redirect(url_for("index"))   
     
+@app.route("/gonderi-guncelle/<id>", methods = ['GET', "POST"])
+def gonderiguncelle(id):
+    if request.method == "GET":
+        cursor = mysql.connection.cursor()
+
+        query = "SELECT * FROM articles WHERE id = %s"
+        result = cursor.execute(query, (id,))
+
+        if result > 0:
+            data = cursor.fetchone()
+            cursor.close()
+
+            return render_template("gonderiguncelle.html", data = data)
+
+        else:
+            cursor.close()
+
+            flash("Böyle bir gönderi yok. Lütfen tekrar dene.", "danger")
+            return redirect(url_for("yazilar"))
+    
+    elif request.method == "POST":
+        title = request.form.get('title')
+        content = request.form.get('content')
+        blogContent = request.form.get('blogContent')
+        hastag = request.form.get('hastag')
+
+        cursor = mysql.connection.cursor()
+
+        query = "UPDATE articles SET title = %s, content = %s, blogContent = %s, hastag = %s, IsPublish = 0 WHERE id = %s"
+        cursor.execute(query, (title, content, blogContent, hastag, id))
+
+        if cursor.rowcount > 0:
+            mysql.connection.commit()
+            cursor.close()
+
+            flash("Yazınız Güncellendi. Tekrar herkese açık olmadan önce lütfen yetkililerden tekrar yayıma alınmasını isteyin", "success")
+            return redirect(url_for("yazilar"))
+
+        else:
+            cursor.close()
+
+            flash("Güncelleme başarısız. Tekrar deneyin devam ederse yetkililere iletin", "warning")
+            return redirect(url_for("yazilar"))
+
+    else:
+        return "Yokk"
+
+@app.route("/delete/<id>")
+def yazisil():
+    cursor = mysql.connection.cursor()
+
+    query = "DELETE"
 
 @app.route("/yazarlar")
 def yazarlar():
