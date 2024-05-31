@@ -7,7 +7,7 @@ import base64
 import os
 
 from config import create_app, init_mysql
-from views.functions import login_required, date, generate_url
+from views.functions import login_required, date, generate_url, admin_required
 
 SITE_URL = "http://localhost"
 
@@ -19,9 +19,6 @@ def index():
     if "logged_in" in session:
         if session["IsVerified"] == 1:
             return redirect(url_for("yazilar"))
-        
-        if session["IsAdmin"] == 1:
-            return render_template("admin.html")
     
     cursor = mysql.connection.cursor()
 
@@ -73,13 +70,24 @@ def login():
 
                     if data['IsVerified'] == 0:
                         return redirect(url_for("editprofile"))
-
                     else:
+                        cursor.close()
                         return redirect(url_for("index"))
 
                 else:
                     cursor.close()
-                    return redirect(url_for("security"))
+                    session['logged_in'] = True
+                    session['id'] = data['id']
+                    session['userName'] = data['userName']
+                    session['email'] = data['email']
+                    session['IsAdmin'] = data['IsAdmin']
+                    session['IsVerified'] = data['IsVerified']
+                    session['profileImage'] = data['profileImage']
+                    if data['IsVerified'] == 0:
+                        return redirect(url_for("editprofile"))
+                    else:
+                        cursor.close()
+                        return redirect(url_for("index"))
                 
             else:
                 cursor.close()
@@ -90,7 +98,6 @@ def login():
             cursor.close()
             flash("Kullanıcı bulunamadı", "danger")
             return redirect(url_for("login"))
-
 
     else:
         return "Error"
@@ -310,10 +317,24 @@ def gonderiguncelle(id):
         return "Yokk"
 
 @app.route("/delete/<id>")
-def yazisil():
+def yazisil(id):
     cursor = mysql.connection.cursor()
 
-    query = "DELETE"
+    query = "DELETE FROM articles WHERE id = %s"
+    cursor.execute(query, (id))
+
+    if cursor.rowcount > 0:
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("Gönderi silindi", "success")
+        return redirect(url_for("yazilar"))
+
+    else:
+        cursor.close()
+
+        flash("Gönderi silinemedi", "danger")
+        return redirect(url_for("yazilar"))
 
 @app.route("/yazarlar")
 def yazarlar():
@@ -340,6 +361,27 @@ def hakkimizda():
 @app.route("/iletisim")
 def iletisim():
     return render_template("iletisim.html")
+
+@app.route("/onay-bekleyenler")
+@admin_required
+def onaybekleyenler():
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM articles WHERE IsPublish = 0"
+    result = cursor.execute(query)
+
+    if result > 0:
+        datas = cursor.fetchall()
+        cursor.close()
+
+        return render_template("onaybekleyenler.html", datas = datas)
+
+    else:
+        cursor.close()
+
+        flash("Şuanda onay bekleyen yazı bulunmamaktadır", "danger")
+        
+        return redirect(url_for("yazilar"))
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 50))

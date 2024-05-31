@@ -33,6 +33,8 @@
 
 <body>
 
+    {% include "includes/messages.html" %}
+
     <header role="banner">
         <h1>Yazar Yönetim Paneli</h1>
         <ul class="utilities">
@@ -46,7 +48,11 @@
         <ul class="main">
             <li class="edit"><a href="/yazilarim">Yazıların</a></li>
             <li class="write"><a href="/yazi-yaz">Yazı Yaz</a></li>
-            <li class="users"><a href="/profilim">Profilin</a></li>
+            <!-- <li class="users"><a href="/profilim">Profilin</a></li> -->
+
+            {% if session['IsAdmin'] == 1 %}
+            <li class="write"><a href="/onay-bekleyenler">Onay Bekleyen Yazılar</a></li>
+            {% endif %}
         </ul>
     </nav>
 
