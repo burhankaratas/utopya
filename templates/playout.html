@@ -33,7 +33,7 @@
 
 </head>
 
-<body style="font-family: 'Nunito', Arial, Helvetica, sans-serif; color: black">
+<body style="font-family: 'Nunito', Arial, Helvetica, sans-serif; color: black; background-color: #F0F0EA">
 
     {% include "includes/navbar.html" %}
     {% include "includes/messages.html" %}
@@ -117,7 +117,89 @@
         }
     </style>
 
+    <br><br><br>
 
+    <div class="container-fluid" style="background-color: #363D46; color: white;">
+        <div class="row">
+            <div class="col-sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm" style="margin-top: 30px;">
+                            <div>
+                                <span class="footerbaslik"> Site Haritası </span>
+                                <div>
+                                    <a href="/yazarlar" class="haritalink"> Yazarlar </a>
+                                    <a href="/hakkimizda" class="haritalink"> Hakkımızda </a>
+                                    <!-- <a href="/iletisim" class="haritalink"> İletişim </a> -->
+                                    <a href="/login" class="haritalink"> Giriş Yap </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm" style="margin-top: 30px;">
+                            <div>
+                                <span class="footerbaslik"> İletişim </span>
+                                <br>
+                                <a href="#" class="iletisimlink">
+                                    <img src="../static/img/instagramwhite.png" height="30">
+                                </a>
+                                <a href="#" class="iletisimlink">
+                                    <img src="../static/img/mediumwhite.png" height="30">
+                                </a>
+                                <a href="#" class="iletisimlink">
+                                    <img src="../static/img/xwhite.png" height="30">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm" style="margin-top: 20px; text-align: center;">
+                <span style="font-size: 13px;"> bu site <a href="https://karatasweb.com.tr"
+                        style="color: #4BED5B; text-decoration: underline" target="_blank"> karatasweb</a> tarafından
+                    geliştirilmiştir. </span>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .footerbaslik {
+            display: block;
+            font-size: 25px;
+            font-weight: bolder;
+        }
+
+        .sonyazi {
+            display: block;
+            color: white;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        .sonyazi:hover {
+            color: white;
+        }
+
+        .haritalink {
+            margin-top: 10px;
+            display: block;
+            color: white;
+        }
+
+        .haritalink:hover {
+            color: white;
+        }
+
+        .iletisimlink {
+            margin-left: 10px;
+        }
+
+        .iletisimlink:hover {
+            text-decoration: none;
+        }
+    </style>
     <!-- Links -->
     <link rel="stylesheet" href="../static/css/main.css">
 

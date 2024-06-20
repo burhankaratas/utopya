@@ -1,40 +1,47 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <nav class="navbar navbar-expand-lg fixed-top">
-                <div class="container">
-                    <a class="navbar-brand" href="/">
-                        <img src="../../static/img/logow.png" alt="Logo" height="40">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"><i class="fa-solid fa-bars-staggered"></i></span>
-                    </button>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/">
+            <img src="../static/img/logo.svg" alt="Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"> <i class="fa-solid fa-bars-staggered"></i> </span>
+        </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav m-auto">
-                            <li class="nav-item">
-                                <a class="nav-link nlink" href="/">Ana Sayfa</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink" href="/yazarlar">Yazarlar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink" href="/hakkimizda">Hakkımızda</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nlink" href="/iletisim">İletişim</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link nlink" href="/login">Giriş Yap</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/yazarlar">Yazarlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/hakkimizda">Hakkımızda</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="/iletisim">İletişim</a>
+                </li> -->
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="/login" class="nav-link">
+                        <button style="border-radius: 10px"> Giriş Yap </button>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
 </div>
+
+<style>
+    .nav-link {
+        color: #363D46;
+        font-size: 18px;
+        margin-left: 30px;
+    }
+
+    .nav-link:hover {
+        color: #575f6b;
+    }
+</style>

@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-sm">
                                 {% if data['IsPublish'] == 0 %}
-                                Hayır
+                                <a href="/publish/{{data.id}}"><button class="btn btn-success"> Yayıma Al </button></a>
                                 {% else %}
                                 Evet
                                 {% endif %}

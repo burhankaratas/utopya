@@ -182,10 +182,11 @@ def yaziekle():
         articleLogo = request.files['articleLogo']
         
         if articleLogo.filename == "":
-            flash('Makale logosu alınamadı. Lütfen tekrar giriniz.', "danger")
-            return redirect(url_for("yaziekle"))
-
-        articleLogor = base64.b64encode(articleLogo.read()).decode('utf-8')
+            articleLogor = "None"
+        
+        else:
+            articleLogor = base64.b64encode(articleLogo.read()).decode('utf-8')
+    
         writer = session['userName']
         createdDate = date()
         url = generate_url(title)
@@ -270,6 +271,7 @@ def yazi(url):
         return redirect(url_for("index"))   
     
 @app.route("/gonderi-guncelle/<id>", methods = ['GET', "POST"])
+@login_required
 def gonderiguncelle(id):
     if request.method == "GET":
         cursor = mysql.connection.cursor()
@@ -317,11 +319,12 @@ def gonderiguncelle(id):
         return "Yokk"
 
 @app.route("/delete/<id>")
+@login_required
 def yazisil(id):
     cursor = mysql.connection.cursor()
 
     query = "DELETE FROM articles WHERE id = %s"
-    cursor.execute(query, (id))
+    cursor.execute(query, (id,))
 
     if cursor.rowcount > 0:
         mysql.connection.commit()
@@ -358,9 +361,16 @@ def yazarlar():
 def hakkimizda():
     return render_template("hakkimizda.html")
 
-@app.route("/iletisim")
-def iletisim():
-    return render_template("iletisim.html")
+# @app.route("/iletisim", methods = ["GET", "POST"])
+# def iletisim():
+#     if request.method == "GET":
+#         return render_template("iletisim.html")
+    
+#     elif request.method == "POST":
+#         name = request.form.get("name")
+#         email = request.form.get("email")
+#         message = request.form.get("message")
+        
 
 @app.route("/onay-bekleyenler")
 @admin_required
@@ -381,6 +391,28 @@ def onaybekleyenler():
         flash("Şuanda onay bekleyen yazı bulunmamaktadır", "danger")
         
         return redirect(url_for("yazilar"))
+    
+
+@app.route("/publish/<id>")
+@admin_required
+def publishwait(id):
+    cursor = mysql.connection.cursor()
+
+    query = "UPDATE articles SET IsPublish = 1 WHERE id = %s"
+    cursor.execute(query, (id,))
+
+    if cursor.rowcount > 0:
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("Yazı şuan herkese açık olarak yayımlandı!", "success")
+        return redirect(url_for("index"))
+
+    else:
+        cursor.close()
+
+        flash("Gönderi zaten yayımda veya bir hata oluştu. Devam ederse site yetkililerine bildiriniz", "danger")
+        return redirect(url_for("index"))
 
 
 if __name__ == "__main__":

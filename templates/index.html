@@ -9,81 +9,78 @@
 {% block body %}
 
 <div class="container">
-    <div class="row ir1">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-sm img" style="text-align: center;">
+            <img src="../static/img/kitap.svg" alt="dergi resmi" height="300" draggable="false">
+        </div>
         <div class="col-sm">
-            <img src="https://kerteriz.net/content/images/2021/10/kerteriz-logo-kare.png" alt="Logo">
-            <h1 class="ih1"> Kerteriz Blog </h1>
-            <p>
-                Profesyoneller için en güncel içerik ve kaynakların yer aldığı <br> muhteşem bir blog deneyimi
-            </p>
-            <button class="ibuton">KAYIT OLUN</button>
-            <span class="ibehind"></span>
-            <button class="ibuton">GİRİŞ YAPIN</button>
+            <h1 style="font-weight: bolder;"> Yenilikçi Dergi <br> Platformu </h1>
+            <span class="aciklama">
+                Her bir kalemin bambaşka bir "ütopya" yarattığının farkındayız.Bu yüzden başka ruhların tasarladığı
+                dünyalara sızmak istiyoruz. Fikirlerle bir araya gelmek, içimizde ki fısıltıları başkaları da duysun,
+                anlasın istiyoruz. Bunun için özgür, tarafsız ve gepgeniş bir yelpazeye sahip olan bir alan yaratmak
+                istedik ve adını da "ütopya" koyduk. Buradaki tek sınır hayal gücünüz.
+
+            </span>
         </div>
     </div>
-    <div class="row ir2">
+    <div class="row" style="margin-top: 50px;">
         <div class="col-sm">
-            <h6 class="ih6">ÖNE ÇIKAN YAZILAR</h6>
-            <hr>
-            <br>
-            <div class="container-fluid">
-                <div class="row">
-                    {% for data in datas %}
-                    {% if data['IsPinned'] == 1 %}
-                    <div class="col-sm">
-                        <br>
-                        <div class="iock">
-                            <a href="/p/{{data.url}}" class="iiocklink">
-                                <img src="data:image/jpeg;base64,{{ data['articleLogo'] }}" alt="resim"
-                                    class="iockimage" height="200" width="200">
-                                <br><br>
-                                <h4 class="ih4">{{data['title']}}</h4>
-                            </a>
-                        </div>
-                    </div>
-                    {% else %}
-
-                    {% endif %}
-                    {% endfor %}
+            <h3 style="font-weight: bolder; display: inline-block"> En Son Yayınlananlar </h3> <a href="/icerik"
+                style="color: black;"> <span style="float: right; font-weight: bolder; text-decoration: underline">
+                    Tümünü Gör</span> </a>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 30px;">
+        {% for article in datas %}
+        {% if loop.index0 % 3 == 0 %}
+        <div class="row">
+            {% endif %}
+            <div class="col-sm">
+                <br>
+                <div class="icerikkutu">
+                    <br>
+                    <h4>{{ article.title }}</h4>
+                    <span class="metin">
+                        {{ article.content }}
+                    </span>
+                    <br>
+                    <ul style="list-style-type: none; margin-left: -30px">
+                        <li>
+                            {% if article.hastag != "" or article.hastag == None %}
+                            <div class="kategori" style="background-color: red;"></div>
+                            {{article.hastag}}
+                            {% endif %}
+                        </li>
+                        <a href="/p/{{article.url}}" style="color: white; float: right"> <span> Daha Fazla </span> </a>
+                    </ul>
                 </div>
             </div>
+            {% if loop.index0 % 3 == 2 or loop.last %}
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
-    <div class="row ir3">
-        <div class="col-sm"></div>
-        <div class="col-sm-8">
-            <h6 class="ih6">SON YAZILAR</h6>
-            <hr>
-            {% for data in datas %}
-            <br>
-            <a href="/p/{{data.url}}" style="color: black; text-decoration: none">
-                <div class="iyks">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <br>
-                                <img src="data:image/jpeg;base64,{{ data['articleLogo'] }}" alt="resim" height="100"
-                                    width="150">
-                            </div>
-                            <div class="col-sm-9">
-                                <br>
-                                <h6 class="ih6">{{data.title}}</h6>
-                                <span class="inp"> {{data.content}} </span>
-                                <br>
-                                <span class="text-muted inpk"> {{data.createdDate}} / {{data.writer}} </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-            <!-- <div class="ibtncb">
-                <button class="ibuton">Daha Fazla Yükle</button>
-            </div> -->
-        </div>
-        <div class="col-sm"></div>
-    </div>
+
 </div>
+
+<style>
+    .icerikkutu {
+        background-color: #737373;
+        color: white;
+        padding: 15px;
+    }
+
+    .metin {
+        font-size: 16px;
+    }
+
+    .kategori {
+        padding: 5px;
+        display: inline-block;
+        border-radius: 50%;
+    }
+</style>
 
 <br><br><br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
