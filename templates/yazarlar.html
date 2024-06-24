@@ -82,7 +82,9 @@
                 {% for data in datas %}
                 <div class="column">
                     <div class="card">
+                        {% if data.profileImage != "" %}
                         <img src="..{{data.profileImage}}" alt="Profil Resmi" style="width:100%;">
+                        {% endif %}
                         <div class="container">
                             <br>
                             <h2>{{data.userName}}</h2>

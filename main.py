@@ -22,7 +22,7 @@ def index():
     
     cursor = mysql.connection.cursor()
 
-    query = "SELECT * FROM articles WHERE IsPublish = 1 ORDER BY id DESC"
+    query = "SELECT title, content, writer, url, createdDate, hastag FROM articles WHERE IsPublish = 1 ORDER BY id DESC"
     result = cursor.execute(query)
 
     if result > 0:
