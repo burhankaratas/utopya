@@ -83,22 +83,28 @@
                 <div class="column">
                     <div class="card">
                         {% if data.profileImage != "" %}
-                        <img src="..{{data.profileImage}}" alt="Profil Resmi" style="width:100%;">
+                        <img src="..{{data.profileImage}}" alt="Profil Resmi" style="height: auto; width: 100%">
                         {% endif %}
                         <div class="container">
                             <br>
-                            <h2>{{data.userName}}</h2>
-                            <p class="title">
+                            <h2>{{data.name}} {{data.surName}} </h2>
+                            <span class="text-muted">
+                                @{{data.userName}} /
+
                                 {% if data.IsAdmin == 1 %}
                                 Admin
                                 {% else %}
                                 Yazar
                                 {% endif %}
-                            </p>
+                            </span>
+
+                            <br>
+                            <br>
                             <p>{{data.profileContent}}</p>
                             <p><a href="/@{{data.userName}}">
                                     <button class="button">Yazılarına Git</button>
                                 </a></p>
+
                         </div>
                     </div>
                 </div>

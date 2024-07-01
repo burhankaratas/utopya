@@ -1,0 +1,148 @@
+{% extends 'applayout.html' %}
+
+{% block head %}
+<title> Yazı Oluştur - Ütopya </title>
+{% endblock head %}
+
+{% block body %}
+
+<br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <a href="/index" style="text-decoration: none; color: black" class="gerilink"> ← Geri Git </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div style="margin-top: 40px;">
+                <span class="klasikbaslik"> Hesap Bilgileriniz </span>
+            </div>
+            <br>
+
+            <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                <form method="post">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div>
+                                    <span class="span"> Hesap Adınız </span>
+                                    <input type="text" class="inputc" value="{{data.userName}}" required
+                                        name="userName">
+                                </div>
+                                <div>
+                                    <span class="span"> Adınız </span>
+                                    <input type="text" class="inputc" value="{{data.name}}" required name="name">
+                                </div>
+                                <div>
+                                    <span class="span"> Hesap Oluşturulma Tarihi </span>
+                                    <input type="text" class="inputc" value="{{data.createdDate}}" disabled required
+                                        name="createdDate">
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div>
+                                    <span class="span"> Mail Adresiniz </span>
+                                    <input type="mail" class="inputc" value="{{data.email}}" required name="email">
+                                </div>
+                                <div>
+                                    <span class="span"> Soyadınız </span>
+                                    <input type="text" class="inputc" value="{{data.surName}}" required name="surName">
+                                </div>
+                                <div>
+                                    <span class="span"> Hesap Açıklamanız </span>
+                                    <input type="text" class="inputc" value="{{data.profileContent}}" required
+                                        name="profileContent">
+                                </div>
+                                <div>
+                                    <br><br>
+                                    <a href="/index" style="color: red; margin-right: 20px"> İptal </a>
+                                    <input type="submit" value="Değişiklikleri Kaydet" class="btn btn-success"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div style="margin-top: 40px;">
+                <span class="klasikbaslik"> Profil Fotoğrafınız </span>
+            </div>
+            <br>
+
+            <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                <form action="/changephoto" method="post" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm order-sm-0 order-1">
+                                <div>
+                                    <span class="span"> Profil Fotoğrafınız </span>
+                                    <input type="file" class="inputc" required name="profileImage">
+                                </div>
+                                <div>
+                                    <br><br>
+                                    <a href="index" style="color: red; margin-right: 20px"> İptal </a>
+                                    <input type="submit" value="Değişiklikleri Kaydet" class="btn btn-success"></input>
+                                </div>
+                            </div>
+                            <div class="col-sm order-sm-1 order-0" style="text-align: center;" class="mobilo">
+                                <br>
+                                <img src="{{session['profileImage']}}" alt="profil fotoğrafınız" height="200px"
+                                    width="auto">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <span class="klasikbaslik"> Şifre Değiştirme </span>
+            </div>
+            <br>
+
+            <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                <form action="/changepassword" method="post">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm order-sm-0 order-1">
+                                <div>
+                                    <span class="span"> Eski Şifreniz </span>
+                                    <input type="password" class="inputc" required name="lastpassword">
+                                </div>
+                                <div>
+                                    <span class="span"> Yeni Şifreniz </span>
+                                    <input type="password" class="inputc" required name="newpassword">
+                                </div>
+                                <div>
+                                    <span class="span"> Yeni Şifre Tekrar </span>
+                                    <input type="password" class="inputc" required name="newpasswordagain">
+                                </div>
+                                <div>
+                                    <br><br>
+                                    <a href="/index" style="color: red; margin-right: 20px"> İptal </a>
+                                    <input type="submit" value="Değişiklikleri Kaydet" class="btn btn-success"></input>
+                                </div>
+                            </div>
+                            <div class="col-sm order-sm-1 order-0" style="text-align: center;">
+                                <br><br>
+                                <img src="../static/img/password.png" height="250px" width="auto">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<br><br>
+{% endblock body %}

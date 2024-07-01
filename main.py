@@ -413,7 +413,176 @@ def publishwait(id):
 
         flash("Gönderi zaten yayımda veya bir hata oluştu. Devam ederse site yetkililerine bildiriniz", "danger")
         return redirect(url_for("index"))
+    
+@app.route("/ayarlar", methods = ["GET", "POST"])
+@login_required
+def ayarlar():
+    if request.method == "GET":
+        cursor = mysql.connection.cursor()
 
+        query = "SELECT * FROM users WHERE id = %s"
+        result = cursor.execute(query, (session['id'],))
+
+        if result > 0:
+            data = cursor.fetchone()
+
+            cursor.close()
+
+            return render_template("hesabim.html", data = data)
+
+        else:
+            cursor.close()
+            flash("Beklenmedik bir hata oluştu.", "danger")
+            return redirect(url_for("blogindex"))
+        
+    elif request.method == "POST":
+        userName = request.form.get("userName")
+        name = request.form.get("name")
+        surName = request.form.get("surName")
+        email = request.form.get("email")
+        profileContent = request.form.get("profileContent")
+
+        cur = mysql.connection.cursor()
+
+        fristquery = "SELECT * FROM users WHERE id = %s"
+        result = cur.execute(fristquery, (session["id"],))
+
+        data = cur.fetchone()
+
+        if userName == data['userName'] and name == data['name'] and surName == data        ['surName'] and email == data['email'] and profileContent == data['profileContent']:
+            flash("Değişiklik yapılmadı. Herhangi bir güncelleme işlemi gerçekleştirilmedi.", "info")
+            return redirect(url_for("blogindex"))
+
+        query = "UPDATE users SET userName = %s, name = %s, surName = %s, email = %s, profileContent = %s WHERE id = %s"
+
+        cur.execute(query, (userName, name, surName, email, profileContent, session["id"]))
+
+        if cur.rowcount > 0:
+            mysql.connection.commit()
+            cur.close()
+
+            flash("Hesap bilgileriniz başarıyla güncellendi!", "success")
+            return redirect(url_for("blogindex"))
+        
+        else:
+            cur.close()
+
+            flash("Beklenmedik bir hata ile karşılaşıldı. Lütfen tekrar deneyin.", "danger")
+
+
+@app.route("/index")
+@login_required
+def blogindex():
+    return render_template("blogindex.html")
+
+
+@app.route("/changephoto", methods = ["POST"])
+@login_required
+def changephoto():
+    if request.method == "POST":
+        profileImage = request.files['profileImage']
+
+        if profileImage.filename == '':
+            flash("Resim dosyası okunamadı. Tekrar yükleyin", "warning")
+            return redirect(url_for("ayarlar"))
+        
+        filename = secure_filename(profileImage.filename)
+        random_filename = f"{uuid.uuid4().hex}_{filename}"
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], random_filename)
+        profileImage.save(file_path)
+
+        profile_image_url = f"/{file_path}"
+
+        cur = mysql.connection.cursor()
+
+        query = "UPDATE users SET profileImage = %s WHERE id = %s"
+        cur.execute(query, (profile_image_url, (session["id"],)))
+
+        if cur.rowcount > 0:
+            mysql.connection.commit()
+            cur.close()
+
+            session["profileImage"] = profile_image_url
+
+            flash("Profil fotoğrafınız başarıyla güncellendi!", "success")
+            return redirect(url_for("ayarlar"))
+        
+        else:
+            flash("Beklenmedik bir hata ile karşılaşıldı. Lütfen tekrar deneyiniz", "danger")
+            return redirect(url_for("ayarlar"))
+
+@app.route("/changepassword", methods = ["POST"])
+@login_required
+def changepassword():
+    if request.method == "POST":
+        latestpassword = request.form.get("lastpassword")
+
+        newpassword = request.form.get("newpassword")
+        newpasswordagain = request.form.get("newpasswordagain")
+
+        if latestpassword == newpassword:
+            flash("Şifreniz yeni şifreniz ile aynı olamaz", "danger")
+            return redirect(url_for("ayarlar"))
+
+        cur = mysql.connection.cursor()
+
+        query = "SELECT password FROM users WHERE id = %s"
+        result = cur.execute(query, (session["id"],))
+
+        if result > 0:
+            data = cur.fetchone()
+
+            if sha256_crypt.verify(latestpassword, data["password"]):
+                if newpassword != newpasswordagain:
+                    flash("Şifreler birbiri ile uyuşmuyor. Lütfen tekrar deneyiniz", "danger")
+                    return redirect(url_for("ayarlar"))
+                
+                hashedpassword = sha256_crypt.encrypt(newpassword)
+
+                query2 = "UPDATE users SET password = %s WHERE id = %s"
+                cur.execute(query2, (hashedpassword, session["id"],))
+
+                if cur.rowcount > 0:
+                    mysql.connection.commit()
+                    cur.close()
+
+                    flash("Şifreniz başarıyla güncellendi", "success")
+                    return redirect(url_for("ayarlar"))
+
+                else:
+                    cur.close()
+
+                    flash("Beklenmedik bir hata. Lütfen tekrar deneyiniz", "danger")
+                    return redirect(url_for("ayarlar")) 
+
+            else:
+                cur.close()
+
+                flash("Eski şifre hatalı", "danger")
+                return redirect(url_for("ayarlar"))
+        
+        else:
+            cur.close()
+
+            flash("Beklenmedik bir hata ile karşılaşıldı", "danger")
+            return redirect(url_for("ayarlar"))
+        
+@app.route("/taslaklar")
+@login_required
+def taslaklar():
+    cur = mysql.connection.cursor()
+
+    query = "SELECT id, title, content, writer, watch, url, createdDate, hastag FROM articles WHERE writer = %s"
+
+    result = cur.execute(query, (session["userName"],))
+
+    if result > 0:
+        pass
+
+    else:
+        pass # Burada kaldım
+
+    return render_template("taslaklar.html")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 50))

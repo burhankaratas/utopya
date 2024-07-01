@@ -1,0 +1,78 @@
+1{% extends 'applayout.html' %}
+
+{% block head %}
+<title> Main - Ütopya </title>
+{% endblock head %}
+
+{% block body %}
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <br>
+            <a href="/yazilarim" style="text-decoration: none; color: #333B69">
+                <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                    <br>
+                    <img src="../static/img/yazilar.svg" alt="">
+                    <span style="font-weight: bolder; margin-left: 10px"> Tüm Yazılar </span>
+                    <br><br>
+                    <span class="text-muted"> Tüm yazıları görün ve yönetin </span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm">
+            <br>
+            <a href="/yazi-yaz" style="text-decoration: none; color: #333B69">
+                <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                    <br>
+                    <img src="../static/img/add.svg" alt="">
+                    <span style="font-weight: bolder; margin-left: 10px"> Yazı Ekle </span>
+                    <br><br>
+                    <span class="text-muted"> Yeni Yazı Ekleyin </span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% if session.IsAdmin == 1 %}
+        <div class="col-sm">
+            <br>
+            <a href="/yazianalizleri" style="text-decoration: none; color: #333B69">
+                <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                    <br>
+                    <img src="../static/img/view.svg" alt="">
+                    <span style="font-weight: bolder; margin-left: 10px"> Analizler </span>
+                    <br><br>
+                    <span class="text-muted"> Yazıların analizlerini görün </span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm">
+            <br>
+            <a href="/onay-bekleyenler" style="text-decoration: none; color: #333B69">
+                <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                    <br>
+                    <img src="../static/img/restart.svg" alt="">
+                    <span style="font-weight: bolder; margin-left: 10px"> Onay Bekleyen Yazılar </span>
+                    <br><br>
+                    <span class="text-muted"> Yayım için onay bekleyen yazıları görün
+                    </span>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+        <div class="col-sm">
+            <br>
+            <a href="/taslaklar" style="text-decoration: none; color: #333B69">
+                <div class="paketkutu" style="box-shadow: none; border: 1px solid #E6EFF5">
+                    <br>
+                    <img src="../static/img/navigation.svg" alt="">
+                    <span style="font-weight: bolder; margin-left: 10px"> Taslaklar </span>
+                    <br><br>
+                    <span class="text-muted"> Henüz yayımlı olmayan yazılarınızı yönetin </span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock body %}

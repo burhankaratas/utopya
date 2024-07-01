@@ -36,7 +36,9 @@
 <div class="bottomprofile">
     {% if "logged_in" in session and session["userName"] == userName %}
     <br>
-    <a href="/author"> <button class="editprofilebutton"> Profilinizi Düzenleyin </button> </a>
+    <span class="text-muted">
+        (Bu sensin)
+    </span>
     {% endif %}
 
     <style>

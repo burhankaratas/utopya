@@ -4,71 +4,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/img/truck-fast.png" type="image/x-icon">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Links -->
-    <link rel="shortcut icon" href="https://kerteriz.net/content/images/2021/10/kerteriz-logo-kare.png"
-        type="image/x-icon">
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <link rel="stylesheet" href="../static/css/app.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
 
     {% block head %}
 
     {% endblock head %}
+
+    <title> Blog </title>
 </head>
 
-<body>
+<body style="background-color: #F5F7FA;">
 
-    {% include "includes/messages.html" %}
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: all 0.6s ease;
+        }
 
-    <header role="banner">
-        <h1>Yazar Yönetim Paneli</h1>
-        <ul class="utilities">
-            <br>
-            <li class="users"><a href="#">Hesabınız</a></li>
-            <li class="logout warn"><a href="/logout">Çıkış Yap</a></li>
-        </ul>
-    </header>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
 
-    <nav role='navigation'>
-        <ul class="main">
-            <li class="edit"><a href="/yazilarim">Yazıların</a></li>
-            <li class="write"><a href="/yazi-yaz">Yazı Yaz</a></li>
-            <!-- <li class="users"><a href="/profilim">Profilin</a></li> -->
+        .h1 {
+            display: block;
+            font-weight: bolder;
+        }
 
-            {% if session['IsAdmin'] == 1 %}
-            <li class="write"><a href="/onay-bekleyenler">Onay Bekleyen Yazılar</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+        .span {
+            display: block;
+            margin-top: 20px;
+        }
 
-    <main role="main">
+        .buton {
+            border: none;
+            background-color: #1DCD8D;
+            color: white;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 10px;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
 
-        <section class="panel important">
-            {% block body %}
+        .butons {
+            border: none;
+            background-color: #1DCD8D;
+            color: white;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 10px;
+        }
 
-            {% endblock body %}
-        </section>
+        .butonc {
+            border: 1px solid #123288;
+            background-color: white;
+            color: #123288;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 10px;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
 
-    </main>
+        .button {
+            border: none;
+            background-color: #1DCD8D;
+            color: white;
+            padding-left: 60px;
+            padding-right: 60px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 10px;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .paketkutu {
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.182);
+            background-color: white;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .popular {
+            background-color: #FFF9EB;
+            color: #C6952A;
+            padding: 3px;
+            margin-left: 10px;
+            border-radius: 10px;
+        }
+
+        .fristcol {
+            margin-top: 120px;
+        }
+
+        .garipyazi {
+            font-weight: bolder;
+            margin-left: 20px;
+        }
+
+        .linkf {
+            color: white;
+            display: block;
+        }
+
+        .linkf:hover {
+            color: white;
+        }
+
+        .garipyaziw {
+            font-weight: bolder;
+            color: white;
+        }
+
+        .ucasama {
+            padding-left: 250px;
+            padding-right: 250px;
+        }
+
+        .asamakutu {
+            background-color: #F1F6FF;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        @media screen and (max-width: 990px) {
+            .fristcol {
+                margin-top: 40px;
+            }
+
+            .imagecol {
+                display: none;
+            }
+
+            .ucasama {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .asamakutu {
+                padding: 10px;
+            }
+
+            .imgist {
+                height: 250px;
+            }
+        }
+
+        .input {
+            display: block;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 200px;
+            border: 1px solid rgb(202, 202, 202);
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        .inputc {
+            display: block;
+            margin-top: 10px;
+            border-radius: 5px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            width: 300px;
+            border: 1px solid #DFEAF2;
+        }
+
+        .submit {
+            display: block;
+            margin-top: 10px;
+            background-color: #1DCD8D;
+            color: white;
+            border: none;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .klasikbaslik {
+            font-size: 20px;
+            font-weight: bolder;
+            color: #343C6A;
+        }
+    </style>
+    <style>
+        #mySidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 3001;
+            top: 0;
+            left: 0;
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 20px;
+            border-right: 1px solid #e5e5e5;
+        }
+
+        #mySidebar .a {
+            padding: 15px 8px 15px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .baslik {
+            font-size: 22px;
+            font-weight: bolder;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            margin-left: 240px;
+        }
+
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            display: none;
+            z-index: 999;
+        }
+
+        .mobilea {
+            margin: auto;
+            margin-left: 15px;
+            color: white;
+        }
+
+        .mobilea:hover {
+            text-decoration: none;
+            color: white;
+        }
+
+        .main {
+            margin-top: 80px;
+            margin-left: 280px;
+            margin-right: 50px;
+        }
 
 
-    <!-- Links -->
-    <link rel="stylesheet" href="../static/css/styles.css">
+        @media only screen and (max-width: 1000px) {
+            #mySidebar {
+                display: none;
+            }
+
+            #rightSidebar {
+                display: none;
+            }
+
+            #main {
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .main {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .bottom-bar {
+                display: block;
+            }
+
+        }
+
+        .ustsag {
+            display: inline-block;
+            padding: 5px;
+            padding-left: 0px;
+            padding-right: 25px;
+            border-radius: 5px;
+        }
+
+        .ustsag:hover {
+            background-color: #f7f7f7;
+            transition: 0.6s;
+        }
+
+        .navbar {
+            border-bottom: 1px solid #e5e5e5;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            /* Diğer öğelerin üzerinde kalması için z-index değeri ayarlayabilirsiniz */
+            background-color: white;
+            z-index: 300;
+        }
+    </style>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="/">
+            <div style="text-align: center;">
+                <img src="../../static/img/logo.png" height="35" style="margin-right: 40px;">
+            </div>
+            <br><br>
+        </a>
+        <a href="/index" class="a"><img src="../static/img/homec.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Anasayfa </span>
+        </a>
+        <a href="/yazilarim" class="a"><img src="../static/img/yazilar.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Yazılar </span>
+        </a>
+        <a href="/yazi-yaz" class="a"><img src="../static/img/add.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Yazı Ekle </span>
+        </a>
+        <a href="/taslaklar" class="a"><img src="../static/img/navigation.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Taslaklar </span>
+        </a>
+        {% if session.IsAdmin == 1 %}
+        <a href="/onay-bekleyenler" class="a"><img src="../static/img/restart.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Sıfırlama </span>
+        </a>
+
+        <a href="/yazianalizleri" class="a"><img src="../static/img/view.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Analizler </span>
+        </a>
+        {% endif %}
+        <a href="/logout" class="a"><img src="../static/img/logout.svg" height="25" width="25"
+                style="font-size: 40px; color: #007bff; margin-right: 10px; float: left"></img> <span> Çıkış Yap </span>
+        </a>
+    </div>
+
+    <div id="main">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+            <a class="navbar-brand" href="#" style="margin-left: 20px;">Blog Yönetim Paneli</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="/ayarlar" class="notifications"> <img src="../static/img/settings.png"
+                                alt="Bildirimler" height="20"> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="notifications"> <img src="../static/img/notifications.png" alt="Bildirimler"
+                                height="20"> </a>
+                    </li>
+                    <li class="nav-item">
+                        <img src="{{session.profileImage}}" alt="profil resmi" height="50" width="50"
+                            style="border-radius: 50%;" draggable="false">
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        {% include "includes/messages.html" %}
+
+
+        {% block body %}
+
+        {% endblock body %}
+
+
+    </div>
+
+
+    <style>
+        .navbar-nav {
+            position: fixed;
+            top: 5px;
+            right: 20px;
+            /* İstenilen sağlık boşluk */
+            z-index: 1000;
+            /* Diğer öğelerin üzerinde kalması için z-index değeri ayarlayabilirsiniz */
+            background-color: white;
+        }
+
+        .nav-item {
+            margin-left: 10px;
+            /* İstenilen aralıkları ayarlayabilirsiniz */
+            display: inline-block;
+        }
+    </style>
+    <style>
+        .notifications {
+            display: block;
+            margin-right: 20px;
+            margin-top: 10px;
+            background-color: #F5F7FA;
+            padding: 5px;
+            border-radius: 50%;
+        }
+    </style>
+
+
+
+    <br><br><br>
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
