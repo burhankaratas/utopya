@@ -1,0 +1,84 @@
+{% extends 'applayout.html' %}
+
+{% block head %}
+<title> Taslaklarınız - Ütopya </title>
+{% endblock head %}
+
+{% block body %}
+<br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <a href="/index" style="text-decoration: none; color: black" class="gerilink"> ← Geri Git </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div style="margin-top: 40px;">
+                <span class="klasikbaslik"> Taslakta Olan Yazılar </span>
+            </div>
+            <br>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm">
+                                Ad
+                            </div>
+                            <div class="col-sm">
+                                İçerik
+                            </div>
+                            <div class="col-sm">
+                                Ön İzleme
+                            </div>
+                            <div class="col-sm">
+                                Yayıma Gönder
+                            </div>
+                            <div class="col-sm">
+                                Düzenle / Sil
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                {% for data in datas %}
+                <li class="list-group-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm">
+                                {{data['title']}}
+                            </div>
+                            <div class="col-sm">
+                                {{data['content']}}
+                            </div>
+                            <div class="col-sm">
+                                <a href="/taslak/{{data.id}}" target="_blank"><button class="btn btn-success"> Git
+                                    </button></a>
+                            </div>
+                            <div class="col-sm">
+                                <a href="/pub/{{data.id}}"><button class="btn btn-success"> Git </button></a>
+                            </div>
+                            <div class="col-sm">
+                                <a href="gonderi-guncelle/{{data.id}}"
+                                    style="text-decoration: none; color: rgb(1, 9, 255); font-size: 20px; margin-left: 20px;"><i
+                                        class="fa-solid fa-pen"></i></a>
+                                <a href="delete/{{data.id}}"
+                                    style="text-decoration: none; color: red; font-size: 20px; margin-left: 20px"><i
+                                        class="fa-solid fa-trash-can"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

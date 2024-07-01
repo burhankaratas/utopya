@@ -18,7 +18,7 @@ mysql = init_mysql(app)
 def index():
     if "logged_in" in session:
         if session["IsVerified"] == 1:
-            return redirect(url_for("yazilar"))
+            return redirect(url_for("blogindex"))
     
     cursor = mysql.connection.cursor()
 
@@ -155,7 +155,7 @@ def editprofile():
 def yazilar():
     cursor = mysql.connection.cursor()
 
-    query = "SELECT * FROM articles WHERE writer = %s"
+    query = "SELECT * FROM articles WHERE writer = %s AND IsDraft = 0"
     result = cursor.execute(query, (session['userName'],))
 
     if result > 0:
@@ -179,13 +179,7 @@ def yaziekle():
         hastag = request.form.get("hastag")
 
         blogContent = request.form.get("blogContent")
-        articleLogo = request.files['articleLogo']
         
-        if articleLogo.filename == "":
-            articleLogor = "None"
-        
-        else:
-            articleLogor = base64.b64encode(articleLogo.read()).decode('utf-8')
     
         writer = session['userName']
         createdDate = date()
@@ -193,14 +187,14 @@ def yaziekle():
 
         cursor = mysql.connection.cursor()
 
-        query = "INSERT INTO articles (title, content, blogContent, articleLogo, writer, createdDate, url, hastag) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(query, (title, content, blogContent, articleLogor, writer, createdDate, url, hastag))
+        query = "INSERT INTO articles (title, content, blogContent, writer, createdDate, url, hastag, IsDraft) VALUES (%s, %s, %s, %s, %s, %s, %s, 1)"
+        cursor.execute(query, (title, content, blogContent, writer, createdDate, url, hastag))
 
         if cursor.rowcount > 0:
             mysql.connection.commit()
             cursor.close()
-            flash("Yazınız Yetkili Ekibe İletildi! Yetkililer tarafından onaylandığında yazınız herkese açık olacaktır!", "success")
-            return redirect(url_for("yazilar"))
+            flash("Yazınız taslak olarak kaydedildi. Taslaklardan yazınızı yayım için gönderebilir veya ön izlemesini görebilirsiniz", "success")
+            return redirect(url_for("taslaklar"))
         
         else:
             cursor.close()
@@ -361,22 +355,11 @@ def yazarlar():
 def hakkimizda():
     return render_template("hakkimizda.html")
 
-# @app.route("/iletisim", methods = ["GET", "POST"])
-# def iletisim():
-#     if request.method == "GET":
-#         return render_template("iletisim.html")
-    
-#     elif request.method == "POST":
-#         name = request.form.get("name")
-#         email = request.form.get("email")
-#         message = request.form.get("message")
-        
-
 @app.route("/onay-bekleyenler")
 @admin_required
 def onaybekleyenler():
     cursor = mysql.connection.cursor()
-    query = "SELECT * FROM articles WHERE IsPublish = 0"
+    query = "SELECT * FROM articles WHERE IsPublish = 0 AND IsDraft = 0"
     result = cursor.execute(query)
 
     if result > 0:
@@ -572,17 +555,65 @@ def changepassword():
 def taslaklar():
     cur = mysql.connection.cursor()
 
-    query = "SELECT id, title, content, writer, watch, url, createdDate, hastag FROM articles WHERE writer = %s"
+    query = "SELECT id, title, content, writer, watch, url, createdDate, hastag FROM articles WHERE writer = %s AND IsDraft = 1"
 
     result = cur.execute(query, (session["userName"],))
 
     if result > 0:
-        pass
+        datas = cur.fetchall()
+        cur.close()
+
+        return render_template("taslaklar.html", datas = datas)
+        
 
     else:
-        pass # Burada kaldım
+        cur.close()
 
-    return render_template("taslaklar.html")
+        flash("Herhangi bir taslak bulunmamakta", "warning")
+        return redirect(url_for("blogindex"))
+    
+
+@app.route("/taslak/<id>")
+@login_required
+def taslak(id):
+    cur = mysql.connection.cursor()
+
+    query = "SELECT * FROM articles WHERE id = %s"
+    result = cur.execute(query, (id,))
+
+    if result > 0:
+        data = cur.fetchone()
+        cur.close()
+
+        return render_template("yazi.html", data = data)
+
+    else:
+        cur.close()
+
+        flash("Taslak bulunamadı", "warning")
+        return redirect(url_for("taslaklar"))
+    
+
+@app.route("/pub/<id>")
+def pubrequest(id):
+    cur = mysql.connection.cursor()
+    
+    query = "UPDATE articles SET IsDraft = 0 WHERE id = %s"
+    cur.execute(query, (id,))
+
+    if cur.rowcount > 0:
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Yayım için yöneticilere gönderildi", "success")
+        return redirect(url_for("blogindex"))
+    
+    else:
+        cur.close()
+
+        flash("Beklenmedik bir hata. Lütfen tekrar deneyin", "danger")
+        return redirect(url_for("blogindex"))
+    
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 50))
