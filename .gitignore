@@ -1,3 +1,7 @@
 .env
-static/uploads/*
-ssl/*
+
+app/src/ssl/*
+app/src/logs/*
+app/static/uploads/*
+
+__pycache__

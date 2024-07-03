@@ -39,7 +39,6 @@ def date():
         "Eylül", "Ekim", "Kasım", "Aralık"
     ]
     
-    # Tarih bilgisini oluştur
     turkish_date = f"{now.day} {turkish_months[now.month - 1]} {now.year}"
     
     return turkish_date

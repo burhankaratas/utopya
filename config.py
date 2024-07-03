@@ -5,10 +5,9 @@ import os
 
 load_dotenv()
 
-def create_app():
-    app = Flask(__name__, static_url_path='/static')
+def config_app(app):
+    UPLOAD_FOLDER = '/app/static/uploads'
 
-    UPLOAD_FOLDER = 'static/uploads'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     app.config["MYSQL_HOST"] = os.getenv("MYSQL_HOST")

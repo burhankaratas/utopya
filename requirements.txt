@@ -1,4 +1,0 @@
-flask
-passlib
-flask_mysqldb
-dotenv
