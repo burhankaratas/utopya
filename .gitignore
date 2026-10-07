@@ -1,7 +1,20 @@
+# Ortam / sırlar
 .env
 
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Uygulama tarafından üretilenler
+app/static/uploads/*
+!app/static/uploads/.gitkeep
 app/src/ssl/*
 app/src/logs/*
-app/static/uploads/*
 
-__pycache__
+# OS / editör
+.DS_Store
+.idea/
+.vscode/
