@@ -1,128 +1,40 @@
 {% extends 'playout.html' %}
-
-{% block head %}
-<title> Ütopya - {{data["userName"]}} Profili </title>
-{% endblock head %}
+{% block head %}<title>@{{ data.userName }} — Ütopya</title>{% endblock %}
 
 {% block body %}
-
-
-<br><br><br><br><br>
-<span class="profilename">
-    {{data["userName"]}}
-</span>
-<span class="profilephoto">
-    {% if profilephoto == "" %}
-    <img src="../static/images/anonim.png" alt="Profile Photo" height="60"
-        style="border-radius: 50%; border: 1px solid white; float: right">
-    {% endif %}
-
-    {% if profilephoto != "" %}
-    <img src="..{{data['profileImage']}}" alt="Profile Photo" height="60" width="60"
-        style="border-radius: 50%; border: 1px solid white; float: right">
-    {% endif %}
-
-</span>
-<span class="profileusername">
-    @{{data["userName"]}}
-</span>
-<div class="profileexplanation">
-    {% if data["profileContent"] == None %}
-
+<div class="max-w-3xl mx-auto px-6 py-16">
+  <!-- Profile header -->
+  <div class="flex items-start gap-5 mb-10 pb-10 border-b border-gray-100">
+    {% if data.profileImage %}
+    <img src="../{{ data.profileImage }}" alt="{{ data.name }}" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
     {% else %}
-    {{data["profileContent"]}}
+    <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-2xl font-bold flex-shrink-0">
+      {{ data.name[0] if data.name else '?' }}
+    </div>
     {% endif %}
-</div>
-<div class="bottomprofile">
-    {% if "logged_in" in session and session["userName"] == userName %}
-    <br>
-    <span class="text-muted">
-        (Bu sensin)
-    </span>
-    {% endif %}
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">{{ data.name }} {{ data.surName }}</h1>
+      <p class="text-sm text-gray-400 mt-0.5">@{{ data.userName }}</p>
+      {% if data.profileContent %}
+      <p class="text-sm text-gray-600 mt-3 leading-relaxed">{{ data.profileContent }}</p>
+      {% endif %}
+    </div>
+  </div>
 
-    <style>
-        .editprofilebutton {
-            border: none;
-            padding-left: 60px;
-            padding-right: 60px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-radius: 10px;
-        }
-
-        .takipbirakbutton {
-            color: white;
-            background-color: #101010;
-            border: none;
-            border: 1px solid rgb(82, 82, 82);
-            padding-left: 60px;
-            padding-right: 60px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-radius: 10px;
-        }
-
-        .takipetbutton {
-            border: none;
-            padding-left: 60px;
-            padding-right: 60px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-radius: 10px;
-        }
-    </style>
-</div>
-<div style="text-align: center;">
-    <hr style="background-color: #232424;">
-</div>
-<br><br>
-
-<div class="container">
+  <!-- Articles -->
+  <h2 class="text-lg font-semibold text-gray-900 mb-6">Yazıları</h2>
+  {% if gonderidatas %}
+  <div class="flex flex-col divide-y divide-gray-100">
     {% for gonderi in gonderidatas %}
-    <a href="/p/{{gonderi.url}}" style="color: black; text-decoration: none">
-        <div class="iyks">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm">
-                        <br>
-                        <h6 class="ih6"> {{gonderi.title}} </h6>
-                        <span class="inp"> {{gonderi.content}} </span>
-                        <br>
-                        <span class="text-muted inpk"> {{gonderi.createdDate}} / {{userName}} </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <a href="/p/{{ gonderi.url }}" class="group py-5 block hover:opacity-75 transition-opacity">
+      <h3 class="font-medium text-gray-900 group-hover:text-gray-600 mb-1">{{ gonderi.title }}</h3>
+      <p class="text-sm text-gray-500 line-clamp-2">{{ gonderi.content }}</p>
+      <p class="text-xs text-gray-400 mt-2">{{ gonderi.createdDate }}</p>
     </a>
-    <hr>
     {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-sm text-gray-400">Henüz yayınlanmış yazı yok.</p>
+  {% endif %}
 </div>
-
-
-<style>
-    .profilename {
-        font-size: 23px;
-        font-weight: 900;
-    }
-
-    .profileusername {
-        display: block;
-    }
-
-    .profileexplanation {
-        margin-top: 25px;
-    }
-
-    .profilebottomlinkpy {
-        color: black;
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-
-    .profilebottomlinkpy:hover {
-        color: black;
-        text-decoration: none;
-    }
-</style>
-{% endblock body %}
+{% endblock %}

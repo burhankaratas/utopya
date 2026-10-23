@@ -1,127 +1,38 @@
 {% extends 'layout.html' %}
-
-{% block head %}
-<title> Yazı - threecybersecurity </title>
-<style>
-    /* Add share button styles */
-    .share-button {
-        position: fixed;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        border: none;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.3s ease;
-        color: #6c757d;
-        font-size: 22px;
-        transition: 0.5s;
-    }
-</style>
-{% endblock head %}
+{% block head %}<title>{{ data.title }} — Ütopya</title>{% endblock %}
 
 {% block body %}
-<br><br><br>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-8">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        {{ data['blogContent'] | safe }}
-
-                        <style>
-                            img {
-                                max-width: 700px;
-                            }
-
-                            @media screen and (max-width: 1000px) {
-                                img {
-                                    max-width: 250px;
-                                }
-                            }
-                        </style>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <br><br>
-            <div>
-                <img src="{{profileImage}}" alt="" height="70" width="70" style="border-radius: 50%;">
-                <a href="/@{{data.writer}}" style="text-decoration: none;"><span style="margin-left: 20px;"
-                        class="text-muted"> {{data['writer']}}
-                    </span></a>
-            </div>
-
-            <br><br>
-
-            <style>
-                .custom-container {
-                    display: flex;
-                    align-items: center;
-                    color: white;
-                    padding: 10px;
-                    border-radius: 5px;
-                }
-
-                .custom-img {
-                    margin-right: 20px;
-                }
-
-                .custom-text-content {
-                    flex: 1;
-                    text-align: left;
-                }
-
-                .custom-text-content .custom-date {
-                    color: #6c757d;
-                }
-
-                .custom-text-content a {
-                    color: white;
-                    text-decoration: none;
-                    transition: 1s;
-                }
-
-                .custom-text-content a:hover {
-                    text-decoration: none;
-                    color: #54F4FC;
-                }
-
-                .aa:hover {
-                    color: #54F4FC;
-                }
-            </style>
-        </div>
+<div class="max-w-3xl mx-auto px-6 py-16">
+  <!-- Meta -->
+  <div class="flex items-center gap-3 mb-10">
+    {% if profileImage %}
+    <img src="{{ profileImage }}" alt="{{ data.writer }}" class="w-9 h-9 rounded-full object-cover">
+    {% else %}
+    <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm font-semibold">
+      {{ data.writer[0]|upper }}
     </div>
+    {% endif %}
+    <div>
+      <a href="/@{{ data.writer }}" class="text-sm font-medium text-gray-900 hover:underline">{{ data.writer }}</a>
+      <p class="text-xs text-gray-400">{{ data.createdDate }}</p>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h1 class="text-4xl font-bold text-gray-900 leading-tight mb-8">{{ data.title }}</h1>
+
+  <!-- Tags -->
+  {% if data.hastag %}
+  <div class="flex gap-2 mb-10">
+    {% for tag in data.hastag.split(',') %}
+    <span class="text-xs font-medium text-gray-500 bg-gray-50 border border-gray-200 px-3 py-1 rounded-full">{{ tag.strip() }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Content -->
+  <div class="prose prose-gray max-w-none text-gray-700 leading-relaxed text-base">
+    {{ data.blogContent | safe }}
+  </div>
 </div>
-
-
-
-<i class="fa-solid fa-share-nodes share-button" onclick="shareContent()"></i>
-
-<script>
-    function shareContent() {
-        // Custom share logic or use the Web Share API if supported
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                url: window.location.href
-            }).then(() => {
-                console.log('Successful share');
-            }).catch((error) => {
-                console.log('Error sharing:', error);
-            });
-        } else {
-            // Fallback for browsers that do not support the Web Share API
-            alert('Paylaşma özelliği tarayıcınız tarafından desteklenmiyor.');
-        }
-    }
-</script>
-
-<br><br><br><br>
-{% endblock body %}
+{% endblock %}

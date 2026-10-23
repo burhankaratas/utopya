@@ -1,110 +1,42 @@
 {% extends 'layout.html' %}
-
-{% block head %}
-<link rel="stylesheet" href="../static/css/home.css">
-
-<title> Ütopya Dergisi - Ütopyanızı Dünyamıza Taşıyın </title>
-{% endblock head %}
+{% block head %}<title>Ütopya — Bağımsız Dijital Dergi</title>{% endblock %}
 
 {% block body %}
+<!-- Hero -->
+<section class="max-w-5xl mx-auto px-6 pt-20 pb-16 border-b border-gray-100">
+  <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-4">Bağımsız Dijital Dergi</p>
+  <h1 class="text-5xl font-bold text-gray-900 leading-tight max-w-2xl">Yenilikçi Dergi Platformu</h1>
+  <p class="mt-5 text-lg text-gray-500 max-w-xl leading-relaxed">Özgür kalemler, özgür düşünceler. Buradaki tek sınır hayal gücümüz.</p>
+  <div class="mt-8 flex gap-4">
+    <a href="/yazarlar" class="bg-gray-900 text-white text-sm px-5 py-2.5 rounded-lg hover:bg-gray-700 transition-colors">Yazarlara Göz At</a>
+    <a href="/login" class="border border-gray-200 text-gray-600 text-sm px-5 py-2.5 rounded-lg hover:border-gray-400 transition-colors">Yazar Ol</a>
+  </div>
+</section>
 
-<div class="container">
-    <div class="row" style="margin-top: 50px;">
-        <div class="col-sm img" style="text-align: center;">
-            <img src="../static/img/kitap.png" alt="dergi resmi" height="300" draggable="false">
-        </div>
-        <div class="col-sm">
-            <h1 style="font-weight: bolder;"> Yenilikçi Dergi <br> Platformu </h1>
-            <span class="aciklama">
-                Bizler her bir kalemin ve ruhun bambaşka ütopyalar yarattığının farkındayız. Bu yüzden başkalarının
-                kaleminden yazılmış dünyalara da sızmak istiyoruz. Yeni fikirlere kulak vermek ve dinamik gençlik
-                heyecanımızla bir araya gelmek,burada yeni üretimler yapmak için çalışıyoruz. Bunun için de özgür,
-                tarafsız ve gepgeniş bir yelpazeye sahip olan adeta ütopik bir dergi kurmak istedik. Bu yüzden de Ütopya
-                Dergisini kurduk. Buradaki tek sınır hayal gücümüz.
-            </span>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 50px;">
-        <div class="col-sm">
-            <h3 style="font-weight: bolder; display: inline-block"> En Son Yayınlananlar </h3> <a href="/icerik"
-                style="color: black;"> <span style="float: right; font-weight: bolder; text-decoration: underline">
-                    Tümünü Gör</span> </a>
-        </div>
-    </div>
-    <div class="container" style="margin-top: 30px;">
-        {% for article in datas %}
-        {% if loop.index0 % 3 == 0 %}
-        <div class="row">
-            {% endif %}
-            <div class="col-sm">
-                <br>
-                <div class="icerikkutu">
-                    <br>
-                    <h4>{{ article.title }}</h4>
-                    <span class="metin">
-                        {{ article.content }}
-                    </span>
-                    <br>
-                    <ul style="list-style-type: none; margin-left: -30px">
-                        <li>
-                            {% if article.hastag != "" or article.hastag == None %}
-                            <div class="kategori" style="background-color: red;"></div>
-                            {{article.hastag}}
-                            {% endif %}
-                        </li>
-                        <a href="/p/{{article.url}}" style="color: white; float: right"> <span> Daha Fazla </span> </a>
-                    </ul>
-                </div>
-            </div>
-            {% if loop.index0 % 3 == 2 or loop.last %}
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
+<!-- Articles -->
+<section class="max-w-5xl mx-auto px-6 py-16">
+  <div class="flex items-center justify-between mb-10">
+    <h2 class="text-xl font-semibold text-gray-900">Son Yayınlar</h2>
+  </div>
 
-</div>
-
-<style>
-    .icerikkutu {
-        background-color: #737373;
-        color: white;
-        padding: 15px;
-    }
-
-    .metin {
-        font-size: 16px;
-    }
-
-    .kategori {
-        padding: 5px;
-        display: inline-block;
-        border-radius: 50%;
-    }
-</style>
-
-<br><br><br>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="../static/js/owl.carousel.js"></script>
-<script src="../static/js/owl.carousel.min.js"></script>
-<script>
-    $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 5
-            }
-        }
-    })
-</script>
-
-{% endblock body %}
+  {% if datas %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for article in datas %}
+    <a href="/p/{{ article.url }}" class="group block border border-gray-100 rounded-xl p-6 hover:border-gray-300 hover:shadow-sm transition-all">
+      {% if article.hastag %}
+      <span class="inline-block text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">{{ article.hastag.split(',')[0] }}</span>
+      {% endif %}
+      <h3 class="text-base font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-snug mb-2">{{ article.title }}</h3>
+      <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed">{{ article.content }}</p>
+      <div class="mt-4 flex items-center justify-between text-xs text-gray-400">
+        <span>{{ article.writer }}</span>
+        <span class="text-gray-300">→</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-gray-400 text-sm">Henüz yayınlanmış yazı yok.</p>
+  {% endif %}
+</section>
+{% endblock %}

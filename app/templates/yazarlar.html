@@ -1,119 +1,37 @@
 {% extends 'layout.html' %}
-
-{% block head %}
-<title> Yazarlar - Ütopya </title>
-{% endblock head %}
+{% block head %}<title>Yazarlar — Ütopya</title>{% endblock %}
 
 {% block body %}
+<div class="max-w-5xl mx-auto px-6 py-16">
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">Yazarlarımız</h1>
+  <p class="text-gray-500 mb-12">Platformumuzdaki tüm yazarlar.</p>
 
-<style>
-    html {
-        box-sizing: border-box;
-    }
-
-    *,
-    *:before,
-    *:after {
-        box-sizing: inherit;
-    }
-
-    .column {
-        float: left;
-        width: 33.3%;
-        margin-bottom: 16px;
-        padding: 0 8px;
-    }
-
-    @media screen and (max-width: 650px) {
-        .column {
-            width: 100%;
-            display: block;
-        }
-    }
-
-    .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    .container {
-        padding: 0 16px;
-    }
-
-    .container::after,
-    .row::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    .title {
-        color: grey;
-    }
-
-    .button {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: 100%;
-    }
-
-    .button:hover {
-        background-color: #555;
-    }
-</style>
-
-
-<div class="container">
-    <div class="row" style="margin-top: 100px;">
-        <div class="col-sm">
-            <h1> Yazarlarımız </h1>
-            <br><br>
-
-            <div class="row">
-
-                {% if datas == None %}
-
-                {% else %}
-                {% for data in datas %}
-                <div class="column">
-                    <div class="card">
-                        {% if data.profileImage != "" %}
-                        <img src="..{{data.profileImage}}" alt="Profil Resmi" style="height: auto; width: 100%">
-                        {% endif %}
-                        <div class="container">
-                            <br>
-                            <h2>{{data.name}} {{data.surName}} </h2>
-                            <span class="text-muted">
-                                @{{data.userName}} /
-
-                                {% if data.IsAdmin == 1 %}
-                                Admin
-                                {% else %}
-                                Yazar
-                                {% endif %}
-                            </span>
-
-                            <br>
-                            <br>
-                            <p>{{data.profileContent}}</p>
-                            <p><a href="/@{{data.userName}}">
-                                    <button class="button">Yazılarına Git</button>
-                                </a></p>
-
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-                {% endif %}
-
-            </div>
+  {% if datas %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for data in datas %}
+    <div class="border border-gray-100 rounded-xl p-6 hover:border-gray-300 hover:shadow-sm transition-all">
+      <div class="flex items-center gap-3 mb-4">
+        {% if data.profileImage %}
+        <img src="../{{ data.profileImage }}" alt="{{ data.name }}" class="w-12 h-12 rounded-full object-cover">
+        {% else %}
+        <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 font-semibold text-lg">
+          {{ data.name[0] if data.name else '?' }}
         </div>
+        {% endif %}
+        <div>
+          <p class="font-semibold text-gray-900 text-sm">{{ data.name }} {{ data.surName }}</p>
+          <p class="text-xs text-gray-400">@{{ data.userName }}</p>
+        </div>
+      </div>
+      {% if data.profileContent %}
+      <p class="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">{{ data.profileContent }}</p>
+      {% endif %}
+      <a href="/@{{ data.userName }}" class="text-xs font-medium text-gray-900 hover:underline">Yazılarına Git →</a>
     </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-gray-400 text-sm">Henüz yazar yok.</p>
+  {% endif %}
 </div>
-
-{% endblock body %}
+{% endblock %}

@@ -1,162 +1,29 @@
 {% extends 'layout.html' %}
-
-{% block head %}
-
-<link rel="stylesheet" href="../static/css/login.css">
-
-<title> Giriş - Ütopya Dergisi </title>
-{% endblock head %}
+{% block head %}<title>Giriş — Ütopya</title>{% endblock %}
 
 {% block body %}
-<div class="login">
-    <h2>Login</h2>
-    <h3>Hoşgelidiniz</h3>
-    <form method="post" class="login-form">
-        <div class="textbox">
-            <input name="username" type="text" placeholder="Username">
-            <span class="material-symbols-outlined">
-                <i class="fa-solid fa-user"></i>
-            </span>
-        </div>
-        <div class="textbox">
-            <input name="password" type="password" placeholder="Password">
-            <span class="material-symbols-outlined">
-                <i class="fa-solid fa-lock"></i>
-            </span>
-        </div>
-        <button type="submit"> Giriş Yap</button>
-        <a href="#">
-            Kimlik bilgilerinizimi unuttunuz!
-        </a>
+<div class="min-h-[80vh] flex items-center justify-center px-6">
+  <div class="w-full max-w-sm">
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold text-gray-900">Ütopya'ya Giriş</h1>
+      <p class="text-sm text-gray-500 mt-2">Hesabınla giriş yap.</p>
+    </div>
+    <form method="post" class="flex flex-col gap-4">
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1.5">Kullanıcı Adı</label>
+        <input name="username" type="text" placeholder="kullanici_adi"
+          class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition-colors">
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1.5">Şifre</label>
+        <input name="password" type="password" placeholder="••••••••"
+          class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition-colors">
+      </div>
+      <button type="submit"
+        class="w-full bg-gray-900 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-gray-700 transition-colors mt-2">
+        Giriş Yap
+      </button>
     </form>
+  </div>
 </div>
-
-
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    html,
-    body {
-        height: 100%;
-    }
-
-    @keyframes bacground {
-        100% {
-            background-size: 4000px 1000px;
-        }
-    }
-
-    body {
-        display: grid;
-        place-items: center;
-        margin: 0;
-        padding: 0 24px;
-        background-size: 2000px 1000px;
-        background-position: -500px 0;
-        color: rgba(0, 0, 0, 0.815);
-        font-family: "Euclid Circular A";
-    }
-
-    @media (width >=500px) {
-        body {
-            padding: 0;
-        }
-    }
-
-    .login {
-        width: 90%;
-        padding: 70px 30px 44px;
-        border-radius: 15px;
-        background: linear-gradient(180deg, rgba(255,255,255,1) 15%, rgba(176,176,176,1) 98%);
-        text-align: center;
-    }
-
-    @media (width >=450px) {
-        .login {
-            width: 380px;
-        }
-    }
-
-    .login>h2 {
-        font-size: 36px;
-        font-weight: 500;
-        margin: 0 0 4px;
-    }
-
-    .login>h3 {
-        color: rgb(20, 20, 20);
-        margin: 0 0 30px;
-        font-weight: 500;
-        font-size: 16px;
-    }
-
-    .login-form {
-        display: grid;
-        gap: 16px;
-        place-items: center;
-        width: 100%;
-        margin: 0;
-    }
-
-    .textbox {
-        width: 100%;
-        position: relative;
-    }
-
-    .textbox span {
-        position: absolute;
-        top: 50%;
-        left: 16px;
-        translate: 0 -50%;
-        color: rgba(0, 0, 0, 0.815);
-    }
-
-    .login-form input,
-    .login-form button {
-        width: 100%;
-        height: 60px;
-        outline: none;
-        padding: 0;
-        font-family: inherit;
-        font-size: 16px;
-        border-radius: 10px;
-    }
-
-    .login-form input {
-        background: transparent;
-        border: 2px solid rgba(0, 0, 0, 0.815);
-        font-size: 18px;
-        padding: 0 20px 0 50px;
-        color: inherit;
-    }
-
-    .login-form input:focus {
-        border-color: #868686;
-    }
-
-    .login-form input:focus~span {
-        color: #868686;
-    }
-
-
-    .login-form button {
-        cursor: pointer;
-        background: #535353;
-        color: #f9f9f9;
-        border: 0;
-        font-weight: 600;
-        letter-spacing: 2px;
-    }
-
-    .login-form a {
-        color: rgba(0, 0, 0, 0.815);
-        font-size: 16px;
-        text-align: left;
-        text-decoration: none;
-    }
-</style>
-
-<br><br><br><br>
-{% endblock body %}
+{% endblock %}
